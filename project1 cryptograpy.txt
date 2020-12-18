@@ -1,0 +1,38 @@
+from cryptography.fernet import Fernet
+def genratePassKey():
+	key = Fernet.generate_key()
+	abc = open("PasswordKey.key",'wb')
+	abc.write(key)
+	abc.close()
+def getMyKey():
+	abc = open("PasswordKey.key",'rb')
+	key = abc.read()
+	abc.close()
+	return key
+def encryptMessage(data):
+	genratePassKey()
+	key = getMyKey()
+	encoded_data = data.encode()
+	k = Fernet(key)
+	encrypted_data = k.encrypt(encoded_data)
+	print(encrypted_data)
+data = input('eneter data what you want encrypt:')
+encryptMessage(data)
+
+output:
+eneter data what you want encrypt:hi how are you
+b'gAAAAABf3Es2o_jmHCnS99PHOyLF2eeZX-BDa_EPJQUe_ARQnHuobqZ98j6Bjckf99bszKKwlole8t1HvfqbeU3Ex0t_lvMCZA=='
+
+
+decrypt:
+
+from cryptography.fernet import Fernet
+def decryptMessage(encrypted_data):
+    key = '_MO8z1Idp0GMVr8lOAyCoj7AEjcHwXqL7Z-qf3tBDPA='
+    k = Fernet(key)
+    decrypted_Message = k.decrypt(encrypted_data)
+    print( 'decrypted data is:',decrypted_Message.decode())
+decryptMessage(b'gAAAAABf3Es2o_jmHCnS99PHOyLF2eeZX-BDa_EPJQUe_ARQnHuobqZ98j6Bjckf99bszKKwlole8t1HvfqbeU3Ex0t_lvMCZA==')
+
+
+output:decrypted data is: hi how are you
